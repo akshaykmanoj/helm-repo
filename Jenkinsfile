@@ -13,7 +13,8 @@ pipeline {
                     bat 'docker login -u akshaykmanoj -p %docker-pwd%'
                     bat 'docker build -t  akshaykmanoj/python_registrationimage:v5 . '
                     bat 'docker push akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER}'
-        }
+                }
+            }
         }
     }
 }
