@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven'
+        Python 'Python'
     }
     stages {
         stage('Checkout') {
