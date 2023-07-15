@@ -10,6 +10,7 @@ pipeline {
         stage('docker build and push')  {
             steps{
                 bat 'docker build -t  akshaykmanoj/python_registrationimage:v5 . '
+                bat 'docker push akshaykmanoj/python_registrationimage:v5'
         }
         }
     }
