@@ -49,7 +49,7 @@ pipeline {
         
         stage('helm package ') {
             steps {
-                bat 'helm package registration-helm'
+                bat 'C:\\windows-amd64\\helm package registration-helm'
             }
         }
     }
