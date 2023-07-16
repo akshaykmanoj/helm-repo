@@ -4,7 +4,7 @@ WORKDIR /app
 COPY . .
 
 RUN apt-get update && \
-    apt-get install -y sed
+    apt-get install -y sed && \
     apt-get install -y python3 python3-pip && \
     pip3 install Django && \
     pip install psycopg2-binary
