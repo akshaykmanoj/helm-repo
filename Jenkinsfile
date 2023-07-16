@@ -42,12 +42,12 @@ pipeline {
                 // sh "sed -i 's|sreekanthpv12/nodebackend:v5|sreekanthpv12/nodebackend:${build_number}|g' ./node-app-chart/values.yaml"
                 //bat "sed -i 's|akshaykmanoj/python_registrationimage:v5|akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER}|g' ./registration-helm/values.yaml"
                 bat """
-                powershell.exe -Command "((Get-Content -Path './registration-helm/values.yaml') -replace 'akshaykmanoj/python_registrationimage:v5', 'akshaykmanoj/python_registrationimage:91') | Set-Content -Path './registration-helm/values.yaml'"
+                powershell.exe -Command "((Get-Content -Path './registration-helm/values.yaml') -replace 'akshaykmanoj/python_registrationimage:v5', 'akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER}') | Set-Content -Path './registration-helm/values.yaml'"
                 """
             }
         }
         
-        stage('helm package '){
+        stage('helm package ') {
             steps {
                 bat 'helm package registration-helm'
             }
