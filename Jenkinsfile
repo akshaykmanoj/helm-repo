@@ -49,7 +49,7 @@ pipeline {
         
         stage('helm package '){
             steps {
-                bat "helm package registration-helm "
+                bat 'helm package registration-helm'
             }
         }
     }
