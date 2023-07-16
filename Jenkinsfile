@@ -15,16 +15,16 @@ pipeline {
             }
         }
 
-        stage('docker login build push and logout')  {
-            steps{
-                withCredentials([string(credentialsId: 'akshaykmanoj', variable: 'docker-pwd')]) {
-                    bat 'docker login -u akshaykmanoj -p %docker-pwd%'
-                    bat "docker build -t  akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER} . "
-                    bat "docker push akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER}"
-                    bat 'docker logout'
-                }
-            }
-        }
+        // stage('docker login build push and logout')  {
+        //     steps{
+        //         withCredentials([string(credentialsId: 'akshaykmanoj', variable: 'docker-pwd')]) {
+        //             bat 'docker login -u akshaykmanoj -p %docker-pwd%'
+        //             bat "docker build -t  akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER} . "
+        //             bat "docker push akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER}"
+        //             bat 'docker logout'
+        //         }
+        //     }
+        // }
         // stage('Update Helm value file') {
         //     steps {
         //         script {
@@ -41,7 +41,9 @@ pipeline {
             steps {
                 // sh "sed -i 's|sreekanthpv12/nodebackend:v5|sreekanthpv12/nodebackend:${build_number}|g' ./node-app-chart/values.yaml"
                 //bat "sed -i 's|akshaykmanoj/python_registrationimage:v5|akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER}|g' ./registration-helm/values.yaml"
-                (Get-Content -Path './registration-helm/values.yaml') -replace 'akshaykmanoj/python_registrationimage:v5', 'akshaykmanoj/python_registrationimage:91' | Set-Content -Path './registration-helm/values.yaml'
+                bat """
+                powershell.exe -Command "((Get-Content -Path './registration-helm/values.yaml') -replace 'akshaykmanoj/python_registrationimage:v5', 'akshaykmanoj/python_registrationimage:91') | Set-Content -Path './registration-helm/values.yaml'"
+                """
             }
         }
         
