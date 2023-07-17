@@ -9,5 +9,12 @@ pipeline {
              echo "${build_number}"
             }
         }
+        stage("Pull from ECR") {
+            steps {
+                bat 'del -rf registration-helm'
+                bat '"C:\\Program Files\\Amazon\\AWSCLIV2\\aws" ecr get-login-password --region us-east-1 | C:\\windows-amd64\\helm registry login --username AWS --password-stdin 409486179793.dkr.ecr.us-east-1.amazonaws.com'
+                bat "C:\\windows-amd64\\helm pull oci://409486179793.dkr.ecr.us-east-1.amazonaws.com/registration-helm --version 0.${params.buildnum}.0 --untar"
+            }
+        }
     }
 }
