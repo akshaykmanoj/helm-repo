@@ -14,6 +14,15 @@ pipeline {
                 checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: 'GIT_key_helm', url: 'https://github.com/akshaykmanoj/helm-repo.git']])
             }
         }
+        stage('Python Build') {
+            steps {
+                bat 'pip install -r ./requirements.txt'
+                dir('./registattionproject'){
+                // Install dependencies and build the Python project
+                    bat 'python settings.py build'
+                }
+            }
+        }
 
         // stage('docker login build push and logout')  {
         //     steps{
@@ -62,7 +71,7 @@ pipeline {
                      bat '"C:\\Program Files\\Amazon\\AWSCLIV2\\aws" ecr create-repository --repository-name registration-helm --region us-east-1'
                      bat "C:\\windows-amd64\\helm push  registration-helm-0.1.0.tgz oci://409486179793.dkr.ecr.us-east-1.amazonaws.com"
                      bat "del registration-helm-0.1.0.tgz"
-                     bat '"C:\\Program Files\\Amazon\\AWSCLIV2\\aws" ecr delete-repository --repository-name registration-helm --region us-east-1 --force'
+                     //bat '"C:\\Program Files\\Amazon\\AWSCLIV2\\aws" ecr delete-repository --repository-name registration-helm --region us-east-1 --force'
                  }
                 }
             }
