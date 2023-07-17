@@ -62,6 +62,7 @@ pipeline {
                      bat '"C:\\Program Files\\Amazon\\AWSCLIV2\\aws" ecr create-repository --repository-name registration-helm --region us-east-1'
                      bat "C:\\windows-amd64\\helm push  registration-helm-0.1.0.tgz oci://409486179793.dkr.ecr.us-east-1.amazonaws.com"
                      bat "rm registration-helm-0.1.0.tgz"
+                     bat '"C:\\Program Files\\Amazon\\AWSCLIV2\\aws" ecr delete-repository --repository-name registration-helm --region us-east-1 --force'
                  }
                 }
             }
