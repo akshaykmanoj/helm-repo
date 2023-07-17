@@ -13,7 +13,7 @@ pipeline {
             steps {
                 withCredentials([aws(credentialsId: 'ecr-credential', accessKeyVariable: 'AWS_ACCESS_KEY_ID', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY')]){
                     bat '"C:\\Program Files\\Amazon\\AWSCLIV2\\aws" ecr get-login-password --region us-east-1 | C:\\windows-amd64\\helm registry login --username AWS --password-stdin 409486179793.dkr.ecr.us-east-1.amazonaws.com'
-                    bat "C:\\windows-amd64\\helm pull oci://409486179793.dkr.ecr.us-east-1.amazonaws.com/registration-helm --version 0.${params.buildnum}.0 --untar"
+                    bat "C:\\windows-amd64\\helm pull oci://409486179793.dkr.ecr.us-east-1.amazonaws.com/registration-helm --version 0.1.0 --untar"
             }
         }
     }
