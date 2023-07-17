@@ -18,37 +18,23 @@ pipeline {
             steps {
                 //bat 'pip install -r ./requirements.txt'
                 dir('./registattionproject'){
-                // Install dependencies and build the Python project
                     bat 'python settings.py build'
                 }
             }
         }
 
-        stage('docker login build push and logout')  {
-            steps{
-                withCredentials([string(credentialsId: 'akshaykmanoj', variable: 'docker-pwd')]) {
-                    bat 'docker login -u akshaykmanoj -p %docker-pwd%'
-                    bat "docker build -t  akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER} . "
-                    bat "docker push akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER}"
-                    bat 'docker logout'
-                }
-            }
-        }
-        // stage('Update Helm value file') {
-        //     steps {
-        //         script {
-        //             def buildNumber = env.BUILD_NUMBER
-                    // def valueFilePath ='./registration-helm/values.yaml'
-        //             def imageTag = "v${buildNumber}"
-            
-        //     // Update the image tag in the Helm value file
-        //             bat "sed -i 's|tag: \".*\"|tag: \"${imageTag}\"|' ${valueFilePath}"
+        // stage('docker login build push and logout')  {
+        //     steps{
+        //         withCredentials([string(credentialsId: 'akshaykmanoj', variable: 'docker-pwd')]) {
+        //             bat 'docker login -u akshaykmanoj -p %docker-pwd%'
+        //             bat "docker build -t  akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER} . "
+        //             bat "docker push akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER}"
+        //             bat 'docker logout'
         //         }
         //     }
         // }
         stage('helmChart tag and  push to ECR') {
             steps {
-                // sh "sed -i 's|sreekanthpv12/nodebackend:v5|sreekanthpv12/nodebackend:${build_number}|g' ./node-app-chart/values.yaml"
                 //bat "sed -i 's|akshaykmanoj/python_registrationimage:v5|akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER}|g' ./registration-helm/values.yaml"
                 bat """
                 powershell.exe -Command "((Get-Content -Path './registration-helm/values.yaml') -replace 'akshaykmanoj/python_registrationimage:v5', 'akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER}') | Set-Content -Path './registration-helm/values.yaml'"
@@ -58,6 +44,7 @@ pipeline {
         
         stage('helm package ') {
             steps {
+                //bat 'helm package registration-helm'
                 bat 'C:\\windows-amd64\\helm package E:\\Devops_Projects\\Registration_devops\\registrationproject\\registration-helm'
 
             }
@@ -69,8 +56,8 @@ pipeline {
                     // bat 'aws ecr get-login-password --region us-east-1 | helm registry login --username AWS --password-stdin 409486179793.dkr.ecr.us-east-1.amazonaws.com'
                      bat '"C:\\Program Files\\Amazon\\AWSCLIV2\\aws" ecr get-login-password --region us-east-1 | C:\\windows-amd64\\helm registry login --username AWS --password-stdin 409486179793.dkr.ecr.us-east-1.amazonaws.com'
                      // bat '"C:\\Program Files\\Amazon\\AWSCLIV2\\aws" ecr create-repository --repository-name registration-helm --region us-east-1'
-                     bat "C:\\windows-amd64\\helm push  registration-helm-0.${BUILD_NUMBER}.0.tgz oci://409486179793.dkr.ecr.us-east-1.amazonaws.com"
-                     bat "del registration-helm-0.${BUILD_NUMBER}.0.tgz"
+                     bat "C:\\windows-amd64\\helm push  registration-helm-0.1.0.tgz oci://409486179793.dkr.ecr.us-east-1.amazonaws.com"
+                     bat "del registration-helm-0.1.0.tgz"
                      //bat '"C:\\Program Files\\Amazon\\AWSCLIV2\\aws" ecr delete-repository --repository-name registration-helm --region us-east-1 --force'
                  }
                 }
