@@ -38,7 +38,7 @@ pipeline {
         //     steps {
         //         script {
         //             def buildNumber = env.BUILD_NUMBER
-        //             def valueFilePath ='./registration-helm/values.yaml'
+                    // def valueFilePath ='./registration-helm/values.yaml'
         //             def imageTag = "v${buildNumber}"
             
         //     // Update the image tag in the Helm value file
