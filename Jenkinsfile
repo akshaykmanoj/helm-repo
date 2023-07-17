@@ -24,16 +24,16 @@ pipeline {
             }
         }
 
-        // stage('docker login build push and logout')  {
-        //     steps{
-        //         withCredentials([string(credentialsId: 'akshaykmanoj', variable: 'docker-pwd')]) {
-        //             bat 'docker login -u akshaykmanoj -p %docker-pwd%'
-        //             bat "docker build -t  akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER} . "
-        //             bat "docker push akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER}"
-        //             bat 'docker logout'
-        //         }
-        //     }
-        // }
+        stage('docker login build push and logout')  {
+            steps{
+                withCredentials([string(credentialsId: 'akshaykmanoj', variable: 'docker-pwd')]) {
+                    bat 'docker login -u akshaykmanoj -p %docker-pwd%'
+                    bat "docker build -t  akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER} . "
+                    bat "docker push akshaykmanoj/python_registrationimage:${env.BUILD_NUMBER}"
+                    bat 'docker logout'
+                }
+            }
+        }
         // stage('Update Helm value file') {
         //     steps {
         //         script {
