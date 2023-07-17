@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Python Build') {
             steps {
-                bat 'pip install -r ./requirements.txt'
+                //bat 'pip install -r ./requirements.txt'
                 dir('./registattionproject'){
                 // Install dependencies and build the Python project
                     bat 'python settings.py build'
