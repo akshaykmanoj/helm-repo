@@ -1,7 +1,7 @@
 pipeline {
     agent any
     parameters {
-        string(name: 'build_number', defaultValue: '', description: 'The build number for this job')
+        string(name: '${build_number}', defaultValue: '', description: 'The build number for this job')
     }
     stages {
         stage('Build') {
