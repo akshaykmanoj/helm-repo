@@ -15,8 +15,14 @@ pipeline {
                     bat 'rmdir /s /q registration-helm'
                     bat '"C:\\Program Files\\Amazon\\AWSCLIV2\\aws" ecr get-login-password --region us-east-1 | C:\\windows-amd64\\helm registry login --username AWS --password-stdin 409486179793.dkr.ecr.us-east-1.amazonaws.com'
                     bat "C:\\windows-amd64\\helm pull oci://409486179793.dkr.ecr.us-east-1.amazonaws.com/registration-helm --version 0.1.0 --untar"
+                }
             }
         }
-    }
+        stage("Deploy to Minikube") {
+            steps {
+                // bat 'helm install registration-helm registration-helm'
+                bat 'C:\\windows-amd64\\helm install registration-helm registration-helm'
+            }
+        }
 }
 }
