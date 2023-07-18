@@ -18,11 +18,11 @@ pipeline {
                 }
             }
         }
-        stage("Deploy to Minikube") {
-            steps {
+        //stage("Deploy to Minikube") {
+            //steps {
                 // bat 'helm install registration-helm registration-helm'
-                bat 'C:\\windows-amd64\\helm install registration-helm registration-helm'
-            }
-        }
+               // bat 'C:\\windows-amd64\\helm install registration-helm registration-helm'
+           // }
+        //}
 }
 }
